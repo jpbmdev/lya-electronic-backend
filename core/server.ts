@@ -15,6 +15,8 @@ class Server {
   }
 
   execute() {
+    this.app.use(express.json());
+
     this.userRoutes.useRoutes(this.app);
 
     mongoose

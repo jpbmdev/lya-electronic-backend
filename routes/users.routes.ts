@@ -1,6 +1,7 @@
 import express from "express";
 import { Express, Router } from "express";
 import { UserController } from "../controllers/user.controller";
+import { body } from "express-validator";
 
 class UsersRoutes {
   router: Router;
@@ -13,7 +14,11 @@ class UsersRoutes {
   }
 
   initializeRoutes() {
-    this.router.post("/", this.userController.createUser);
+    this.router.post(
+      "/",
+      [body("email").isEmail(), body("password").isLength({ min: 5 })],
+      this.userController.createUser
+    );
   }
 
   useRoutes(app: Express) {
