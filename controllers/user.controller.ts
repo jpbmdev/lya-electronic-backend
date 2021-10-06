@@ -4,7 +4,9 @@ import User from "../models/user.model";
 import * as bcrypt from "bcrypt";
 
 export class UserController {
+  //Fucion para crar un usuario
   async createUser(req: Request, res: Response) {
+    //Para crear un usuairo tenemos que validar los datos
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.status(422);
@@ -12,9 +14,10 @@ export class UserController {
       return;
     }
 
-    const { email, password } = req.body;
+    const { email, password, name } = req.body;
     let existingUser;
 
+    //Verificamos que no exista un usuario con ese correo
     try {
       existingUser = await User.findOne({ email: email });
     } catch (err) {
@@ -29,15 +32,18 @@ export class UserController {
       return;
     }
 
+    //Encriptamos ya contraseña
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
       email,
       password: hashedPassword,
+      name,
       active: false,
     });
 
+    //Creamos el nuevo usuario
     try {
       await newUser.save();
     } catch (err) {

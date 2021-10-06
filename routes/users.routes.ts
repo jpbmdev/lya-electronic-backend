@@ -16,7 +16,11 @@ class UsersRoutes {
   initializeRoutes() {
     this.router.post(
       "/",
-      [body("email").isEmail(), body("password").isLength({ min: 5 })],
+      [
+        body("email").isEmail(),
+        body("password").isLength({ min: 5 }),
+        body("name").not().isEmpty(),
+      ],
       this.userController.createUser
     );
   }

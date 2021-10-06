@@ -11,6 +11,7 @@ export interface session {
 interface User {
   email: string;
   password: string;
+  name: string;
   active: boolean;
   sessions: session[];
 }
@@ -19,6 +20,7 @@ interface User {
 const userSchema = new Schema<User>({
   email: { type: String, required: true },
   password: { type: String, required: true },
+  name: { type: String, required: true },
   active: { type: Boolean, required: true },
   sessions: {
     type: [
