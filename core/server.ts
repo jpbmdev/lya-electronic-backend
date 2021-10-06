@@ -2,6 +2,7 @@ import express from "express";
 import { Express } from "express";
 import UserRoutes from "../routes/users.routes";
 import AuthorizationRoutes from "../routes/authorization.routes";
+import MqttRoutes from "../routes/mqtt.routes";
 import mongoose from "mongoose";
 
 //Esta clase va a ser el servidor de la aplicacion
@@ -11,6 +12,7 @@ class Server {
   port: string;
   userRoutes: UserRoutes;
   authorizationRoutes: AuthorizationRoutes;
+  mqttRoutes: MqttRoutes;
 
   //Funcion para construir el servidor
   constructor() {
@@ -18,6 +20,7 @@ class Server {
     this.port = process.env.PORT || "8080";
     this.userRoutes = new UserRoutes();
     this.authorizationRoutes = new AuthorizationRoutes();
+    this.mqttRoutes = new MqttRoutes();
   }
 
   //Funcion para correr middlewares deseados
@@ -27,6 +30,8 @@ class Server {
     this.userRoutes.useRoutes(this.app);
 
     this.authorizationRoutes.useAuthorizationRoutes(this.app);
+
+    this.mqttRoutes.useRoutes(this.app);
   }
 
   //Funcion para poner a correr el servidor
