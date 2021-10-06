@@ -1,21 +1,8 @@
-import mqtt from "mqtt";
+// Server Model: Contiene todo el servidor de express + socket.io configurado
+import Server from "./core/server";
 
-const client = mqtt.connect("mqtt://mqtt.lyaelectronic.com");
+// Inicializar la instancia del server
+const server = new Server();
 
-client.on("connect", function () {
-  client.subscribe("lyatest/2486", function (err) {
-    if (!err) {
-      client.publish("lyatest/2486", "Hello mqtt");
-    } else {
-      console.log('lol');
-    }
-  });
-});
-
-client.on("message", function (topic, message) {
-  // message is Buffer
-  console.log(message.toString());
-  client.end();
-});
-
-//MQTT: mqtt://mqtt.lyaelectronic.com:1883
+// Ejecutar el server
+server.execute();
