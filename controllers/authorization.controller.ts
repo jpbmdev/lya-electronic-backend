@@ -56,7 +56,6 @@ export class AuthorizationController {
     //Creamos la sesion
     const currentSession: session = {
       jwt: token,
-      active: true,
       date_created: new Date(),
     };
 
@@ -82,5 +81,9 @@ export class AuthorizationController {
     }
 
     res.json({ token: token });
+  }
+
+  async killSesion(req: Request, res: Response) {
+    res.json("ok");
   }
 }

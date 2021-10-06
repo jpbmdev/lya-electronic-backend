@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
 
 //Creamos el esquema para las sessiones del usuario
+//Aqui se podria incluir la ip y la mac
 export interface session {
   jwt: string;
-  active: boolean;
   date_created: Date;
 }
 
@@ -26,7 +26,6 @@ const userSchema = new Schema<User>({
     type: [
       {
         jwt: { type: String, required: true },
-        active: { type: Boolean, required: true },
         date_created: { type: Date, required: true },
       },
     ],

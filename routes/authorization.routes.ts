@@ -15,6 +15,7 @@ class AuthorizationRoutes {
 
   initializeRoutes() {
     this.router.post("/", this.authorizationController.Login);
+    this.router.delete("/", this.authorizationController.killSesion);
   }
 
   useAuthorizationRoutes(app: Express) {
