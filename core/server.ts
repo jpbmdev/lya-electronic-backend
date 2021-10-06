@@ -1,22 +1,21 @@
 import express from "express";
 import { Express } from "express";
-import userRoutes from "../routes/users.routes";
+import UserRoutes from "../routes/users.routes";
 
 class Server {
   app: Express;
-  port: number;
+  port: string | undefined;
+  userRoutes: UserRoutes;
 
   constructor() {
     this.app = express();
-    this.port = 8080;
-  }
-
-  useUserRoutes() {
-    this.app.use("/users", userRoutes);
+    this.port = process.env.PORT;
+    this.userRoutes = new UserRoutes();
   }
 
   execute() {
-    this.useUserRoutes();
+    this.userRoutes.useRoutes(this.app);
+
     this.app.listen(this.port, () => {
       console.log("Server corriendo en el puerto:", this.port);
     });

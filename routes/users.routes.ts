@@ -1,10 +1,24 @@
 import express from "express";
-import { Request, Response } from "express";
+import { Express, Router } from "express";
+import { UserController } from "../controllers/user.controller";
 
-const router = express.Router();
+class UsersRoutes {
+  router: Router;
+  userController: UserController;
+  
+  constructor() {
+    this.router = express.Router();
+    this.userController = new UserController();
+    this.initializeRoutes();
+  }
 
-router.get("/", (req: Request, res: Response) => {
-    res.json('hello')
-});
+  initializeRoutes() {
+    this.router.get("/", this.userController.createUser);
+  }
 
-export default router;
+  useRoutes(app: Express) {
+    app.use("/users", this.router);
+  }
+}
+
+export default UsersRoutes;
