@@ -50,7 +50,7 @@ export class AuthorizationController {
       userId: existingUser.id,
       email: existingUser.email,
     };
-    
+
     const token = jwt.sign(jwt_payload, JWT_KEY);
 
     //Creamos la sesion
@@ -84,6 +84,6 @@ export class AuthorizationController {
   }
 
   async killSesion(req: Request, res: Response) {
-    res.json("ok");
+    res.json(req.userId);
   }
 }
