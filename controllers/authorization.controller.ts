@@ -100,13 +100,14 @@ export class AuthorizationController {
       return;
     }
 
+    //Removemos el token con el que se accedio a esta peticion de los tokens guardados por el usuario
     const filteredSessions = existingUser.sessions.filter(
       (session) => session.jwt !== req.token
     );
 
+    //Actualizamos el usuario
     existingUser.sessions = filteredSessions;
 
-    //Actualizamos el usuario
     try {
       await existingUser.save();
     } catch (err) {
@@ -114,7 +115,7 @@ export class AuthorizationController {
       res.json("Server Internal Error");
       return;
     }
-    
+
     res.json("session (token) successfully removed");
   }
 }
