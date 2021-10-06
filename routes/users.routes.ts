@@ -36,6 +36,8 @@ class UsersRoutes {
     this.router.delete("/:id", this.userController.deleteUser);
 
     this.router.patch("/:id/active", this.userController.activateUser);
+
+    this.router.get("/:id", this.userController.getUser);
   }
 
   useRoutes(app: Express) {

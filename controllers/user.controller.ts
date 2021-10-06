@@ -167,4 +167,38 @@ export class UserController {
 
     res.json("Usuario activado exitosamente");
   }
+
+  //Funcion para poder borrar un usuairo
+  async getUser(req: Request, res: Response) {
+    //req.params.id Id no necesariametne es el mismo que esta en el token
+    //Se puede comparar para ver si es el mismo del token (req.userId) y garantizar que un usario solo pueda editar su usuario
+    //Pero como se quiso dejar este id supuse que era porque se queria que un usuairo pueda editar otros usuarios o a el mismo
+
+    let existingUser;
+    try {
+      existingUser = await User.findById(req.params.id).select(
+        "name email password active"
+      );
+    } catch (err) {
+      res.status(500);
+      res.json("Server Internal Error");
+      return;
+    }
+
+    //Verificamos si efectivamene el usuario a activar existe
+    if (!existingUser) {
+      res.status(404);
+      res.json("El usuario no existe");
+      return;
+    }
+
+    if (!existingUser.active) {
+      res.status(403);
+      res.json("No posee permisos para esta operacion");
+      return;
+    }
+
+    //Retormamos la Informacion del usuario
+    res.json({ user: existingUser.toObject({ getters: true }) });
+  }
 }
