@@ -5,7 +5,7 @@ import { UserController } from "../controllers/user.controller";
 class UsersRoutes {
   router: Router;
   userController: UserController;
-  
+
   constructor() {
     this.router = express.Router();
     this.userController = new UserController();
@@ -13,7 +13,7 @@ class UsersRoutes {
   }
 
   initializeRoutes() {
-    this.router.get("/", this.userController.createUser);
+    this.router.post("/", this.userController.createUser);
   }
 
   useRoutes(app: Express) {
