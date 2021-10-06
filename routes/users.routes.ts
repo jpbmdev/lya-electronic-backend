@@ -26,6 +26,15 @@ class UsersRoutes {
     );
     //Todas las rutas debajo van a requerir un token
     this.router.use(checkAuth);
+
+    this.router.put(
+      "/:id",
+      [body("name").not().isEmpty()],
+      this.userController.editUser
+    );
+
+    this.router.delete("/:id", this.userController.deleteUser);
+
     this.router.patch("/:id/active", this.userController.activateUser);
   }
 
