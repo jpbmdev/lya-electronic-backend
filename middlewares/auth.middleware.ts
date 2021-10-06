@@ -33,7 +33,7 @@ export const checkAuth = async (
   //Miramos si efectivamente el usuario dentro del token existe
   let existingUser;
   try {
-    existingUser = await User.findOne({ id: userId });
+    existingUser = await User.findById(userId);
   } catch (err) {
     return res.status(500).json({ error: "Server Internal Error" });
   }

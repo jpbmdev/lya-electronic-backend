@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
 
 //Creamos el esquema para las sessiones del usuario
 //Aqui se podria incluir la ip y la mac
@@ -32,5 +33,7 @@ const userSchema = new Schema<User>({
     required: true,
   },
 });
+
+userSchema.plugin(uniqueValidator);
 
 export default model("User", userSchema);

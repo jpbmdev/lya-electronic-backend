@@ -2,6 +2,7 @@ import express from "express";
 import { Express, Router } from "express";
 import { UserController } from "../controllers/user.controller";
 import { body } from "express-validator";
+import { checkAuth } from "../middlewares/auth.middleware";
 
 class UsersRoutes {
   router: Router;
@@ -23,6 +24,9 @@ class UsersRoutes {
       ],
       this.userController.createUser
     );
+    //Todas las rutas debajo van a requerir un token
+    this.router.use(checkAuth);
+    this.router.patch("/:id/active", this.userController.activateUser);
   }
 
   useRoutes(app: Express) {

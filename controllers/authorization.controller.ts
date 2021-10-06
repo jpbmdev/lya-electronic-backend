@@ -86,7 +86,7 @@ export class AuthorizationController {
   async killSesion(req: Request, res: Response) {
     let existingUser;
     try {
-      existingUser = await User.findOne({ id: req.userId });
+      existingUser = await User.findById(req.userId);
     } catch (err) {
       res.status(500);
       res.json("Server Internal Error");

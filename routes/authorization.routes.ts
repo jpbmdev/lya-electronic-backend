@@ -1,6 +1,5 @@
 import express from "express";
 import { Express, Router } from "express";
-import { body } from "express-validator";
 import { AuthorizationController } from "../controllers/authorization.controller";
 import { checkAuth } from "../middlewares/auth.middleware";
 
