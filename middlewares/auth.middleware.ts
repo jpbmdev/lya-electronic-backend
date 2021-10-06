@@ -51,7 +51,9 @@ export const checkAuth = async (
     return res.status(403).json({ error: "Credenciales Invalidas" });
   }
 
+  //Pasamos informacion a los siguentes middlewares
   req.userId = userId;
+  req.token = token;
 
   //Abrimos paso al siguiente middleware si todo salio bien
   next();

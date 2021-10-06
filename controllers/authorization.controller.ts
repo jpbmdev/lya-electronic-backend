@@ -84,6 +84,37 @@ export class AuthorizationController {
   }
 
   async killSesion(req: Request, res: Response) {
-    res.json(req.userId);
+    let existingUser;
+    try {
+      existingUser = await User.findOne({ id: req.userId });
+    } catch (err) {
+      res.status(500);
+      res.json("Server Internal Error");
+      return;
+    }
+
+    //Si llegamos aqui entoces es porque existe un usuario por lo que si no hay es un error
+    if (!existingUser) {
+      res.status(500);
+      res.json("Server Internal Error");
+      return;
+    }
+
+    const filteredSessions = existingUser.sessions.filter(
+      (session) => session.jwt !== req.token
+    );
+
+    existingUser.sessions = filteredSessions;
+
+    //Actualizamos el usuario
+    try {
+      await existingUser.save();
+    } catch (err) {
+      res.status(500);
+      res.json("Server Internal Error");
+      return;
+    }
+    
+    res.json("session (token) successfully removed");
   }
 }
