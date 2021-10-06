@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import User from "../models/user.model";
+import * as bcrypt from "bcrypt";
 
 export class UserController {
   async createUser(req: Request, res: Response) {
@@ -28,13 +29,23 @@ export class UserController {
       return;
     }
 
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const newUser = new User({
       email,
-      password,
+      password: hashedPassword,
       active: false,
     });
 
-    await newUser.save();
+    try {
+      await newUser.save();
+    } catch (err) {
+      res.status(500);
+      res.json("Server Internal Error");
+      return;
+    }
+
     res.json({ userId: newUser.id });
   }
 }

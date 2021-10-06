@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 //Creamos el esquema para las sessiones del usuario
-interface session {
+export interface session {
   jwt: string;
   active: boolean;
   date_created: Date;

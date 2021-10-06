@@ -14,15 +14,11 @@ class AuthorizationRoutes {
   }
 
   initializeRoutes() {
-    this.router.post("/", this.authorizationController.signUp);
+    this.router.post("/", this.authorizationController.Login);
   }
 
   useAuthorizationRoutes(app: Express) {
-    app.use(
-      "/authorization",
-      [body("email").isEmail(), body("password").isLength({ min: 5 })],
-      this.router
-    );
+    app.use("/authorization", this.router);
   }
 }
 
