@@ -3,6 +3,7 @@ import User from "../models/user.model";
 import { session } from "../models/user.model";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { JWT_PAYLOAD } from "../interfaces/jwt-payload";
 
 export class AuthorizationController {
   //Funcion para iniciar una sesion
@@ -45,13 +46,12 @@ export class AuthorizationController {
 
     //No voy a hacer que el token expire ya que como se solicito que haya una ruta para borrarlos
     //Signica que tengo que guardarlos, y si guardo tokens que vencen hay que añadir mas logica pero por tiempo no lo hare
-    const token = jwt.sign(
-      {
-        userId: existingUser.id,
-        email: existingUser.email,
-      },
-      JWT_KEY
-    );
+    const jwt_payload: JWT_PAYLOAD = {
+      userId: existingUser.id,
+      email: existingUser.email,
+    };
+    
+    const token = jwt.sign(jwt_payload, JWT_KEY);
 
     //Creamos la sesion
     const currentSession: session = {
