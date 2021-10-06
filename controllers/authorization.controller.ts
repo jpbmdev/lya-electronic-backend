@@ -27,11 +27,14 @@ export class AuthorizationController {
       return;
     }
 
-    //Verificamos que el usuario exista y que la contraseña sea correcta
-    if (
-      !existingUser ||
-      !(await bcrypt.compare(password, existingUser.password))
-    ) {
+    //Verificamos que el usuario exista
+    if (!existingUser) {
+      res.status(404);
+      res.json("El usuario no existe");
+      return;
+    }
+    //Verificamos que la contraseña sea correcta
+    if (!(await bcrypt.compare(password, existingUser.password))) {
       res.status(403);
       res.json("Credenciales invalidas");
       return;
