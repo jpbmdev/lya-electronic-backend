@@ -1,6 +1,10 @@
 import { Request, Response } from "express";
 import MqttHandler from "../core/mqtt";
+import axios from "axios";
+import { ServerResponse } from "../interfaces/cat-fact";
 
+//Intente declarar esto como atributos de la clase
+//Pero no me sirvio, por lo que lo tuve que declarar asi
 const mqttClient = new MqttHandler();
 mqttClient.connect();
 
@@ -8,11 +12,16 @@ mqttClient.connect();
 export class MqttController {
   async sendMessage(req: Request, res: Response) {
     try {
-      mqttClient.sendMessage("hello i dit it");
-      res.json("ok");
+      const response = await axios.get<ServerResponse>(
+        "https://catfact.ninja/fact"
+      );
+      const { data } = response;
+      const message = { message: data.fact, user: req.userId };
+      mqttClient.sendMessage(JSON.stringify(message));
+      res.json(`Mensaje ${message} enviado exitosamente`);
     } catch (e) {
-      console.log(e);
-      res.json("F");
+      res.status(500);
+      res.json("Server Internal Error");
     }
   }
 }

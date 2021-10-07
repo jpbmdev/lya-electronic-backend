@@ -2,8 +2,6 @@ import express from "express";
 import { Express, Router } from "express";
 import { checkAuth } from "../middlewares/auth.middleware";
 import { MqttController } from "../controllers/mqtt.controller";
-import { MqttClient } from "mqtt";
-import { Request, Response } from "express";
 
 class MqttRoutes {
   router: Router;

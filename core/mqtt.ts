@@ -3,10 +3,12 @@ import mqtt, { MqttClient } from "mqtt";
 class MqttHandler {
   mqttClient: MqttClient | null;
   broker: string;
+  topic: string;
 
   constructor() {
     this.mqttClient = null;
     this.broker = process.env.BROKER || "mqtt://test.mosquitto.org";
+    this.topic = process.env.TOPIC || "lyatest/Betancourt";
   }
 
   connect() {
@@ -21,7 +23,7 @@ class MqttHandler {
   }
 
   sendMessage(message: string) {
-    this.mqttClient?.publish("hello", message);
+    this.mqttClient?.publish(this.topic, message);
   }
 }
 
