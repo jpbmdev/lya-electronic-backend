@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --project ./",
+    "start": "yarn run build && node ./dist/index.js",
     "dev": "nodemon index.ts"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "@types/jsonwebtoken": "^8.5.5",
     "@types/mongoose-unique-validator": "^1.0.5",
     "@types/node": "^16.10.3",
+    "@types/ws": "^8.2.0",
     "kill-port": "^1.6.1",
     "nodemon": "^2.0.13",
     "ts-node": "^10.2.1",
