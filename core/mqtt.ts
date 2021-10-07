@@ -1,5 +1,6 @@
 import mqtt, { MqttClient } from "mqtt";
 
+//Clase que gestiona el cliente de mqtt
 class MqttHandler {
   mqttClient: MqttClient | null;
   broker: string;
@@ -11,8 +12,8 @@ class MqttHandler {
     this.topic = process.env.TOPIC || "lyatest/Betancourt";
   }
 
+  //Funcion para conectarse al broker
   connect() {
-    // Connect mqtt with credentials (in case of needed, otherwise we can omit 2nd param)
     this.mqttClient = mqtt.connect(this.broker);
 
     this.mqttClient.on("error", (err) => {
@@ -22,6 +23,7 @@ class MqttHandler {
     });
   }
 
+  //Funcion para enviar mensaje a un topic
   sendMessage(message: string) {
     this.mqttClient?.publish(this.topic, message);
   }
