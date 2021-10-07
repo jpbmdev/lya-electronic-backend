@@ -18,7 +18,7 @@ export class MqttController {
       const { data } = response;
       const message = { message: data.fact, user: req.userId };
       mqttClient.sendMessage(JSON.stringify(message));
-      res.json(`Mensaje ${message} enviado exitosamente`);
+      res.json(`Mensaje ${data.fact} enviado exitosamente`);
     } catch (e) {
       res.status(500);
       res.json("Server Internal Error");
